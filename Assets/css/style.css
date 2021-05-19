@@ -1,0 +1,6 @@
+.day{
+    flex-direction: column;
+    color: blue;
+    background: black;
+    border-radius: 10%;
+}
