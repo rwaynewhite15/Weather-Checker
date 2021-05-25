@@ -4,3 +4,14 @@
     background: black;
     border-radius: 10%;
 }
+main{
+    background-color: blue;
+    color: white
+}
+.btn{
+    background-color: blue;
+    color: white;
+}
+.form-input{
+    text-align: center;
+}
