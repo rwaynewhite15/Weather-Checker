@@ -1,8 +1,10 @@
 .day{
     flex-direction: column;
-    color: blue;
-    background: black;
-    border-radius: 10%;
+    color: whitesmoke;
+    background: blue;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
 }
 main{
     background-color: blue;
