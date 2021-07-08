@@ -16,14 +16,25 @@ futureDay6.text(moment().add(6, "days").format("dddd, Do"));
 var futureDay7 = $("#future-day-7");
 futureDay7.text(moment().add(7, "days").format("dddd, Do"));
 
+const cityHistory = []
+
+if (localStorage.length > 0){
+cityHistory.push(localStorage.getItem("city history"))
+}
+
 var userFormEl = document.querySelector("#user-form");
 var nameInputEl = document.querySelector("#city-input");
 var searchedBtn = document.querySelector("#city-search");
 var formSubmitHandler = function (event) {
   event.preventDefault();
   var userCity = nameInputEl.value.trim();
-  console.log("Searched City:", userCity);
+    cityHistory.push(userCity);
+
+  console.log("Searched City: " + userCity);
+
+localStorage.setItem("city history", cityHistory);
   getCityWeather(userCity);
+
 };
 
 var CPTLZD = function (wordToBeCap) {
@@ -89,14 +100,16 @@ function getCityWeather(userCity) {
     .then(function (data) {
       console.log(data);
       var uvIndex = data.current.uvi;
-      if (uvIndex > 7) {
+      if (uvIndex > 8) {
         document.querySelector(".uvi").innerText = "UV Index: " + uvIndex;
         document.querySelector(".uvi").style.color = "red";
       }
-      if (uvIndex > 5) {
+      if (uvIndex < 5) {
         document.querySelector(".uvi").innerText = "UV Index: " + uvIndex;
+        document.querySelector(".uvi").style.color = "black";
       } else {
         document.querySelector(".uvi").innerText = "UV Index: " + uvIndex;
+        
       }
     })
     .catch(function (err) {
