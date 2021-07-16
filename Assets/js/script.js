@@ -31,7 +31,6 @@ function displayHistory() {
     element.innerText = cityHistory[i];
     element.addEventListener("click", function (event) {
       var city = event.target.innerText;
-      console.log(city);
       getCityWeather(city);
       getForecast(city);
     });
@@ -46,9 +45,6 @@ var formSubmitHandler = function (event) {
   var userCity = nameInputEl.value.trim();
   if (cityHistory.indexOf(userCity) === -1) {
     cityHistory.push(userCity);
-
-    console.log("Searched City: " + userCity);
-
     localStorage.setItem("City History", JSON.stringify(cityHistory));
     displayHistory();
   }
@@ -86,7 +82,6 @@ function getCityWeather(userCity) {
       return bob.json();
     })
     .then(function (data) {
-      console.log(data);
       var cityLon = data.coord.lon;
       var cityLat = data.coord.lat;
       var icon = data.weather[0].icon;
@@ -117,8 +112,6 @@ function getCityWeather(userCity) {
       return resp.json();
     })
     .then(function (data) {
-      console.log(data);
-
       //Logic for UV Color
       var uvIndex = data.current.uvi;
       if (uvIndex > 8) {
@@ -149,29 +142,35 @@ function getForecast(userCity) {
       return bob.json();
     })
     .then(function (data) {
-      // console.log(data)
       forecast.innerHTML = ""
       for (var i = 0; i < data.list.length; i++){
         if (data.list[i].dt_txt.indexOf("15:00:00") > 0){
-          console.log(data.list[i])
         var day = document.createElement("div");
         day.classList.add("day");
+
         var h1 = document.createElement("h1");
-        h1.innerText = data.list[i].dt_txt.split(" ")[0];
-        day.append(h1);
+        var dateDay = data.list[i].dt_txt.split("-")[2];
+        var dateDay = dateDay.split(" ")[0];
+        var dateMonth = data.list[i].dt_txt.split("-")[1];
+        var dateYear = data.list[i].dt_txt.split("-")[0];
+        h1.innerText = dateMonth + "/" + dateDay + "/" + dateYear;
+        
+        var icon = document.createElement("img")
+        icon.src = 
+        "https://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + ".png";
+
+        var temp = document.createElement("h5");
+        temp.innerText = "Temp: " + data.list[i].main.temp;
+
+        var wind = document.createElement("h5");
+        wind.innerText = "Wind: " + data.list[i].wind.speed + " mph";
+
+        var humidity = document.createElement("h5");
+        humidity.innerText = "Humidity: " + data.list[i].main.humidity + "%";
+
+        day.append(h1,icon,temp,wind,humidity);
         forecast.append(day);
-        //   <div class="day">
-        //   <h1 id="future-day-1">Future Day</h1>
-        //   <div class="flex">
-        //     <img src="" alt="" class="icon1" />
-        //   </div>
-        //   <h5 class="description1">Description</h5>
-        //   <h5 class="card-title temp1 mt-2">Temp</h5>
-        //   <h5 class="card-title wind1">Wind</h5>
-        //   <h5 class="card-title humidity1">Humidity</h5>
-        // </div>
         }
       }
     })
-
-}
+};
