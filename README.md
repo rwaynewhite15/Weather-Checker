@@ -9,7 +9,7 @@
 
   # Screenshot
 
-  ![screenshot](/Assets/img/screenshot.jpg)
+  ![screenshot](./Assets/img/screenshot.jpg)
 
   # Click [Here](https://rwaynewhite15.github.io/Weather-Checker/) to Visit App!
   
